@@ -149,6 +149,27 @@
             
             {% endif %}
 
+            {% for user in downlines %}
+                {% if user.proof_of_activation_fee %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading">Activation Fee Alert</h4>
+                            <p>
+                                Hello {{customer.first_name|title}}, you have been assigned to receive an activation fee from one of your downlines.
+                                visit <a href="{% url 'act_fee_user' %}">this page</a> to confirm payment.
+                            </p>
+                            <hr>
+                            
+                            
+                        </div>
+                    </div>
+                        
+                        
+                </div>
+                {% endif %}
+            {% endfor %}
+
             <h2>Quick Stats</h2>
             <div id="cd"></div>
             <div class="row" id="stats">

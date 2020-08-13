@@ -73,8 +73,8 @@ def addAddress(request):
             #address = form.cleaned_data['address']
             #city = form.cleaned_data['city']
             #state = form.cleaned_data['state']
-            #phone_number = form.cleaned_data['phone_number']
-            #sponsor = form.cleaned_data['sponsor']
+            phone_number = form.cleaned_data['phone_number']
+            sponsor = form.cleaned_data['sponsor']
 
             #Address.objects.create(
             #    customer=customer,
@@ -636,16 +636,17 @@ def userDashboard(request):
             latest_account_details_setting = sponsor_profile.bank
         except:
             latest_account_details_setting = AdminAccountSetting.objects.all().order_by('-date').first()
+    
+        downlines = Customer.objects.filter(sponsor=customer.username, activate=False)
+
 
     help_data = HelpTable.objects.filter(provider=customer.username, approval_status="Not Approved").order_by('-merge_date').first()
     receive_data = HelpTable.objects.filter(receiver=customer.username, approval_status="Not Approved").order_by('-merge_date').first()
     
     context = {'customer':customer, 'help_data':help_data, 'latest_account_details_setting':latest_account_details_setting,
-        'receive_data':receive_data,
+        'receive_data':receive_data, 'downlines':downlines,
         }
     return render(request, 'users/dashboard.html', context)
-
-
 
 
 
@@ -669,3 +670,17 @@ def proofOfActivationPay(request):
 
     context = {'customer':customer, 'form':form, }
     return render(request, 'users/proof_of_act_form.html', context)
+
+
+
+def activation_fee_receipts_user(request):
+    """this page handles the activation fee receipts page"""
+
+    customer = request.user.customer
+    inactive_customers = Customer.objects.filter(activate=False, sponsor=customer.username)
+    inactive_members_count = inactive_customers.count()
+
+    context = {'inactive_customers':inactive_customers, 'inactive_members_count':inactive_members_count}
+    return render(request, 'admins/activation_fee_receipts.html', context)
+
+

@@ -571,7 +571,7 @@ def activation_fee_receipts(request):
 
     inactive_customers = Customer.objects.filter(activate=False)
     inactive_members_count = inactive_customers.count()
+    
 
-
-    contex = {'inactive_customers':inactive_customers, 'inactive_members_count':inactive_members_count}
+    context = {'inactive_customers':inactive_customers, 'inactive_members_count':inactive_members_count}
     return render(request, 'admins/activation_fee_receipts.html', context)

@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/site_settings/referralbonus/', views.referralbonus, name='referralbonus'),
     path('admin/site_settings/account_details/', views.accountDetailsSettings, name='account_details'),
     path('admin/site_settings/activation_fee_setting/', views.activationFeeSetting, name='activation_fee_setting'),
-    #path('admin/acti/', views.activationFeeSetting, name='activation_fee_setting'),
+    path('admin/activation_fee_receipts/', views.activation_fee_receipts, name='activation_fee_receipts'),
     
 
     path('admin/get_help_requests/', views.getHelpRequests, name='get_help_requests'),

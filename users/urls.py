@@ -26,6 +26,7 @@ urlpatterns = [
     path('user/receive_details_page/', views.withdrawalDetailsPage, name='receive_details_page'),
     path('user/user_approve_help/<str:withdrawal_id>/', views.userApproveHelp, name='user_approve_help'),
     path('user/user_report_help/<str:withdrawal_id>/', views.userReportHelp, name='user_report_help'),
+     path('act_fee_user/', views.activation_fee_receipts_user, name='act_fee_user'),
 
 
 

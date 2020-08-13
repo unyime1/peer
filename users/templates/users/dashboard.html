@@ -1,0 +1,216 @@
+{% extends 'users/template.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+#timer {
+	margin: 2em;
+   font-family: 'Source Code Pro','Andale Mono', 'Monaco','Courier New',monospace;
+   font-size: 30px;
+	font-weight: 100;
+}
+.halfway {
+	color: #0000ff;
+}
+.ended {
+	color: #ff0000;
+   font-size: 125% !important;
+   line-height: 0;
+}
+
+</style>
+
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'users/user_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Hi {{customer.first_name|title}}, Welcome to your Dashboard</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if customer.activate == False %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">Activate your Account</h4>
+                        <p>
+                            Hello {{customer.first_name|title}}, new users to our platform are required
+                            to pay and activation fee of ₦1,000 only to the account details below. You will not be able to use our platform
+                            until you do. After payment, head over to <a href="{% url 'activate_proof' %}">this page</a> to submit your proof of payment.
+                        </p>
+                        <hr>
+                        <div class="table-responsive">
+                        
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Bank Name</th>
+                                    <th scope="col">Account Name</th>
+                                    <th scope="col">Account Number</th>
+                                    <th scope="col">Account Type</th>
+                                    
+                                    
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr>
+                                 
+                                        <td> {{latest_account_details_setting.bank_name}} </td>
+                                        <td> {{latest_account_details_setting.account_name}} </td>
+                                        <td> {{latest_account_details_setting.account_number}} </td>
+                                        <td> {{latest_account_details_setting.account_type}} </td>
+                                     
+                                    </tr>
+                                   
+                                    
+                                            
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if help_data.receiver %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading">Provide Help Alert</h4>
+                            <p>
+                                Hello {{customer.first_name|title}}, you have been merged. Please head over to <a href="{% url 'merge_details' %}">this page</a> for details.
+                                You must pay before 10 hours is up or your account will be suspended.
+                            </p>
+                            <hr>
+                            <h5> Minutes Left:</h5>
+                            <div id="timer">Time Left: <b>2:00 Minutes</b> </div>
+                            <script>
+                                
+                                function countdown(seconds) {
+                                seconds = parseInt(sessionStorage.getItem("seconds"))||seconds;
+
+                                function tick() {
+                                    seconds--; 
+                                    sessionStorage.setItem("seconds", seconds)
+                                    var counter = document.getElementById("timer");
+                                    var current_minutes = parseInt(seconds/60);
+                                    var current_seconds = seconds % 60;
+                                    counter.innerHTML = current_minutes + ":" + (current_seconds < 10 ? "0" : "") + current_seconds;
+                                    if( seconds > 0 ) {
+                                    setTimeout(tick, 1000);
+                                    } 
+                                }
+                                tick();
+                                }
+
+                                countdown(36000);
+
+                            </script>
+                        </div>
+                    </div>
+                        
+                        
+                </div>
+                
+                
+            {% endif %}
+
+            {% if receive_data.provider  %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading">Receive Help Alert</h4>
+                            <p>
+                                Hello {{customer.first_name|title}}, you have been merged to receive payment. Please head over to <a href="{% url 'receive_details_page' %}">this page</a> for details.
+                            </p>
+                            <hr>
+                            
+                            
+                        </div>
+                    </div>
+                        
+                        
+                </div>
+            
+            {% endif %}
+
+            <h2>Quick Stats</h2>
+            <div id="cd"></div>
+            <div class="row" id="stats">
+            
+        
+                <div class="col-md-4 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Help Provided</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">₦{{customer.total_user_investments}}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-dollar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Help Received</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">₦{{customer.total_user_withdrawals}}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-line-chart fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number of Downlines</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{customer.total_downlines}}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-user-plus fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </main>
+      
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

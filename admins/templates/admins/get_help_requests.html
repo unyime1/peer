@@ -1,0 +1,73 @@
+{% extends 'admins/template.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'admins/admin_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Get Help Requests</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Total GetHelp Requests </h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">Receiver</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Merge Complete</th>
+                                <th scope="col"></th>
+                                
+               
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for help in helps %}
+                                   
+                                    <tr>
+                                    <td>{{help.receiver}}</td>
+                                    <td> ₦{{help.amount}} </td>
+                                    <td> {{help.date}} </td>
+                                    <td> {{help.status}} </td>
+                                    <td> {{help.complete}} </td>
+                        
+                                    <td><a href="{% url 'approve_withdrawal' help.id %}"><button type="button" class="btn btn-success btn-sm">Approve Request</button></a></td>
+                                    
+                                    </tr>
+                                   
+                                {% endfor %}
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+            </div>
+
+           
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,98 @@
+{% extends 'users/template.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'users/user_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Hi {{customer.first_name|title}}, You Have Been Merged</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+        
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Provide Help</h4>
+                        <p>
+                            Hello {{customer.first_name|title}}, you have been merged to get help from the user below. You can contact 
+                            the user. Click on the approve payment button when you receive the payment.
+                        </p>
+                        <hr>
+                        <p>
+                            If you have not received the payment, and you believe the proof of payment provided is fake,
+                            click on the report fake button. Visit our <a href="{% url 'support' %}">support page</a> if you 
+                            have any complaints.  
+                        </p>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div class="row">
+                <div class="col-md-12">
+        
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">username</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Transaction ID</th>
+                                <th scope="col">Proof</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+
+                                <tr>
+
+                                <td>{{providing_customerr.username}} </td>
+                                <td>{{providing_customer.first_name}} </td>
+                                <td>{{providing_customer.last_name}} </td>
+                                <td>{{providing_customer.phone_number}} </td>
+                                <td>₦{{details.get_help_amount}} </td>
+                                <td>{{details.transaction_id}} </td>
+                                <td> <img class="row-image" src="{{details.user_proofURL}}"> </td>
+                                <td><a href="{% url 'user_approve_help' details.id %}"><button type="button" class="btn btn-success btn-sm">Approve Help</button></a></td>
+                                <td><a href="{% url 'user_report_help' details.id %}"><button type="button" class="btn btn-warning btn-sm">Report Fake</button></a></td>
+
+
+                                </tr>
+                                
+                            
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+
+           
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

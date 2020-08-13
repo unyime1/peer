@@ -1,0 +1,108 @@
+{% extends 'users/template.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style type="text/css">
+    #loadingmsg {
+    color: black;
+      background: #fff; 
+      padding: 10px;
+      position: fixed;
+      top: 50%;
+      left: 30%;
+      z-index: 100;
+      margin-bottom: -25%;
+    
+    }
+    #loadingover {
+    background: black;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+    -moz-opacity: 0.8;
+    -khtml-opacity: 0.8;
+    opacity: 0.8;
+  }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Register</h1>
+            </div>
+
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id='loadingmsg' style='display: none;'>Hi, we're setting up your account. Please wait...</div>
+                    <div id='loadingover' style='display: none;'></div>
+                </div>
+            </div>
+           
+
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" action="" onsubmit=showLoading()>
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-5">
+                            {{form.first_name|as_crispy_field}}
+                            </div>
+                            <div class="col-md-5">
+                            {{form.last_name|as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-5">
+                            {{form.username|as_crispy_field}}
+                            </div>
+                            <div class="col-md-5">
+                            {{form.email|as_crispy_field}} 
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-5">
+                            {{form.password1|as_crispy_field}}
+                            </div>
+                            <div class="col-md-5">
+                            {{form.password2|as_crispy_field}}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Sign Up</button>
+                    </form>
+                    <div class=" ">
+                        Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </main>
+      
+    </div>
+</div>
+
+<script>
+    function showLoading() {
+    document.getElementById('loadingmsg').style.display = 'block';
+    document.getElementById('loadingover').style.display = 'block';
+    }
+</script>
+
+
+{% endblock content %}

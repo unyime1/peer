@@ -1,0 +1,57 @@
+{% extends 'users/template.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% include 'users/user_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+           
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                
+                <h1 class="h2">Get Help</h1>
+               
+            </div>
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+            
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>Submit The Amount of Help You Need</h4>
+                    <p>Hello {{customer.first_name|title}}, please use this page to request for help.
+                        Please note that to get help(withdraw), you must have paid your PH amount in full. 
+                    </p>
+
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                {{form.amount|as_crispy_field}}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                        </div>
+
+                    </form>
+                </div>
+                
+            </div>
+
+            <hr>
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

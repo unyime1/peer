@@ -1,0 +1,88 @@
+{% extends 'users/template.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'users/user_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Hi {{customer.first_name|title}}, You Have Been Merged</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+        
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Provide Help</h4>
+                        <p>
+                            Hello {{customer.first_name|title}}, you have been merged to make payment to a user with details below.
+                            Go ahead and make payment, and thereafter head over to the <a href="{% url 'proof' %}">proof of payment page</a> to submit your proof of payment.
+                        </p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        
+
+            <div class="row">
+                <div class="col-md-12">
+        
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">username</th>
+                                <th scope="col">Bank Name</th>
+                                <th scope="col">Account Name</th>
+                                <th scope="col">Account Number</th>
+                                <th scope="col">Account Type</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Transaction ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+
+                                <tr>
+
+                                <td>{{receiving_customer.username}} </td>
+                                <td>{{receiving_customer.bank.bank_name}} </td>
+                                <td>{{receiving_customer.bank.account_name}} </td>
+                                <td>{{receiving_customer.bank.account_number}} </td>
+                                <td>{{receiving_customer.bank.account_type}} </td>
+                                <td>₦{{details.get_help_amount}} </td>
+                                <td>{{details.transaction_id}} </td>
+
+                                </tr>
+                                
+                            
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+
+           
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

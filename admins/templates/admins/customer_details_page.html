@@ -1,0 +1,143 @@
+{% extends 'admins/template.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'admins/admin_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Customer Details Page</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+
+            
+             <h2 id="products"> Personal Details </h2>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Date Joined</th>
+                                <th scope="col">Total Investments</th>
+                                <th scope="col">Total Withdrawals</th>
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td>{{user.customer.username}}</td>
+                                <td> {{user.customer.first_name}} </td>
+                                <td> {{user.customer.last_name}} </td>
+                                <td> {{user.customer.date_created}} </td>
+                                <td> ₦{{user.customer.total_user_investments}} </td>
+                                <td> ₦{{user.customer.total_user_withdrawals}} </td>
+                               
+                                </tr>
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+            </div>
+
+            <hr>
+            <h2 id="products"> Bank Details</h2>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">Bank Name</th>
+                                <th scope="col">Account Name</th>
+                                <th scope="col">Account Number</th>
+                                <th scope="col">Account Type</th>
+                                
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                <td>{{user.customer.bank.bank_name}}</td>
+                                <td> {{user.customer.bank.account_name}} </td>
+                                <td> {{user.customer.bank.account_number}} </td>
+                                <td> {{user.customer.bank.account_type}} </td>
+                                
+                               
+                                </tr>
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+            </div>
+
+            <hr>
+            <h2 id="products"> Address</h2>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">Residential Address</th>
+                                <th scope="col">City</th>
+                                <th scope="col">State</th>
+                                
+                                
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                <td>{{user.customer.address.address}}</td>
+                                <td> {{user.customer.address.city}} </td>
+                                <td> {{user.customer.address.state}} </td>
+                               
+                                
+                               
+                                </tr>
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+            </div>
+
+           <hr>
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

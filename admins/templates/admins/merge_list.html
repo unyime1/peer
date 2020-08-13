@@ -1,0 +1,84 @@
+{% extends 'admins/template.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'admins/admin_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Provide Help Requests</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Completed Merges</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">Receiver</th>
+                                <th scope="col">Provider</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Transaction ID</th>
+                                <!--  <th scope="col">Down Payment Proof</th> -->
+                               
+                                <th scope="col">User Payment Proof</th>
+
+                                <!-- <th scope="col">Down Payment Status</th> -->
+                                
+                                <th scope="col">Transaction Status</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for help in helps %}
+                                    {% if help.receiver %}
+                                    <tr>
+                                    <td>{{help.receiver}}</td>
+                                    <td> {{help.provider}} </td>
+                                    <td> ₦{{help.amount}} </td>
+                                    <td> {{help.transaction_id}} </td>
+
+                                    
+                                    
+                                    
+                                    <td> <img class="row-image" src="{{help.user_proofURL}}"> </td>
+                                    
+                                    <td> {{help.approval_status}} </td>
+                                   
+                                    <td><a href="{% url 'approve_help' help.id %}"><button type="button" class="btn btn-success btn-sm">Approve Help</button></a></td>
+                                    
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+            </div>
+           
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

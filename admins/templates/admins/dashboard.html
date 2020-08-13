@@ -1,0 +1,89 @@
+{% extends 'admins/template.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'admins/admin_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Hello Admin, Welcome to your Dashboard</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+            <h2>Quick Stats</h2>
+            <div class="row" id="stats">
+
+                <div class="col-md-4 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Users</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"> {{users_count}} </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-user-plus fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+        
+                <div class="col-md-4 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Help Provided</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">₦{{total_help_given}}  </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-dollar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Help Received</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">₦{{total_help_received}}  </div>
+                                
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-line-chart fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

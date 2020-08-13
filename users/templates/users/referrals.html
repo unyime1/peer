@@ -1,0 +1,72 @@
+{% extends 'users/template.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        {% include 'users/user_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+           
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                
+                <h1 class="h2">Referrals ({{total_count_of_downlines}})</h1>
+               
+            </div>
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+            
+            
+            <div class="row">
+                
+                <div class="col-md-12">
+                    <p>Hello {{customer.first_name|title}}, please always endeavor to ensure that the friends you bring to our platform 
+                       input your username while activating their accounts.
+                    </p>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Time of Registration</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for downline in downlines %}
+                          <tr>
+                            <td>{{downline.username}} </td>
+                            <td>{{downline.first_name}} </td>
+                            <td>{{downline.last_name}} </td>
+                            <td>{{downline.phone_number}} </td>
+                            <td>{{downline.email}} </td>
+                            <td>{{downline.date_created}} </td>
+                           
+                          </tr>
+                          {% endfor %}
+                                    
+                              
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

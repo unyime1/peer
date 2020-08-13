@@ -1,0 +1,98 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+    <div class="sidebar-sticky pt-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href=" {% url 'admin_panel' %} ">
+            <span data-feather="home"></span>
+            Dashboard <span class="sr-only">(current)</span> 
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'settings' %}">
+            <span data-feather="file"></span>
+            Site Settings
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'all_users' %}">
+            <span data-feather="file"></span>
+            Users List
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'banned_users' %}">
+            <span data-feather="file"></span>
+            Banned Users
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file"></span>
+            Activation Fee Payments
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'merge_customers' %}">
+            <span data-feather="file"></span>
+            Merge Manually
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'complete_merge' %}">
+            <span data-feather="file"></span>
+            Merge List
+          </a>
+        </li>
+
+        
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'get_help_requests' %} ">
+            <span data-feather="shopping-cart"></span>
+            Get Help Requests
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'provide_help_requests' %}">
+            <span data-feather="users"></span>
+            Provide Help Requests
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'fake_help_reports' %}">
+            <span data-feather="users"></span>
+            Fake Help Reports
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'approved_help_history' %}">
+            <span data-feather="bar-chart-2"></span>
+            Approved Help History
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'support_requests' %}">
+            <span data-feather="layers"></span>
+            Support Requests
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href=" {% url 'profile' %}">
+            <span data-feather="layers"></span>
+            Your Profile
+          </a>
+        </li>
+
+        
+
+      </ul>
+      
+    </div>
+</nav>

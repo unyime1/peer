@@ -1,0 +1,75 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+    <div class="sidebar-sticky pt-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'profile' %}">
+            <span data-feather="home"></span>
+            Dashboard <span class="sr-only">(current)</span> 
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'proof' %}"> 
+            <span data-feather="file"></span>
+            Proof of Payment(PH)
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'investment_page' %}">
+            <span data-feather="file"></span>
+            Provide Help(Invest)
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'investment_history' %}">
+            <span data-feather="shopping-cart"></span>
+            Provide Help History
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'withdrawal_page' %}">
+            <span data-feather="users"></span>
+            Get Help(Withdraw)
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'withdrawal_history' %}">
+            <span data-feather="bar-chart-2"></span>
+            Get Help History
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'referrals' %}">
+            <span data-feather="layers"></span>
+            Referrals/Downlines
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'update_bank' %}">
+            <span data-feather="layers"></span>
+            Update Bank
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'support' %}">
+            <span data-feather="layers"></span>
+            Support
+          </a>
+        </li>
+
+        {% if request.user.is_staff %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin_panel' %}">
+              <span data-feather="layers"></span>
+              Admin Panel
+            </a>
+        </li>
+        {% endif %}
+      </ul>
+      
+    </div>
+</nav>

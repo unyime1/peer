@@ -1,0 +1,199 @@
+{% extends 'admins/template.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+      {% include 'admins/admin_sidebar.html' %}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+               
+                <h1 class="h2">Site Settings</h1>
+                
+            </div>
+            
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-8">                        
+                        {% include 'mains/messages.html' %} 
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Merge Settings</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'merge_settings' %} ">this form</a> to change merge settings 
+                            between manual and automatic.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            Your current setting is: <b> {{latest_merge_setting}} </b>
+                        </p>
+                    </div>
+
+                </div>
+                
+                
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Minimum PH Settings</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'min_help_settings' %} ">this form</a> to change Minimum
+                            PH amount for the platform.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            Your current setting is: <b> {{latest_min_ph_setting}} </b>
+                        </p>
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Maximum PH Settings</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'max_help_settings' %} ">this form</a> to change max 
+                            PH amount on the site.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            Your current setting is: <b> {{latest_max_ph_setting}} </b>
+                        </p>
+                    </div>
+
+                </div>
+                
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Percentage Return Settings</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'returns_settings' %} ">this form</a> to change the percentage returns 
+                            on the platform.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            Your current setting is: <b> {{latest_percentage_returns_setting}} </b>
+                        </p>
+                    </div>
+
+                </div>
+                
+                
+            </div>
+            
+           
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Days to Get Help Settings</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'daystogethelp' %} ">this form</a> to change the days needed to get help.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            Your current setting is: <b> {{latest_days_setting}} </b>
+                        </p>
+                    </div>
+
+                </div>
+                
+                
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Max Referral Bonus Settings</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'referralbonus' %} ">this form</a> to change the max referral bonus.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            Your current setting is: <b> {{latest_bonus}} </b>
+                        </p>
+                    </div>
+
+                </div>
+                
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Activation Fee Settings</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'activation_fee_setting' %} ">this form</a> to change your activation fee options.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            Your current setting is: <b> {{activation_fee_setting}} </b>
+                        </p>
+                    </div>
+
+                </div>
+                
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Admin Account Details</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading"> </h4>
+                        <p>
+                            Hello Admin, please use <a href=" {% url 'account_details' %} ">this form</a> to save you account details.
+                        </p>
+                        
+                        <hr>
+                        <p class="mb-0">
+                            
+                        </p>
+                    </div>
+
+                </div>
+                
+                
+            </div>
+        </main>
+      
+    </div>
+</div>
+
+
+
+{% endblock content %}

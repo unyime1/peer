@@ -443,14 +443,14 @@ def approveDownPayment(request, help_id):
 @admin_only
 @login_required(login_url='login')
 def approveHelp(request, help_id):
-    helps = HelpTable.objects.get(id=help_id)
+    helps = HelpTable.objects.get(id=help_id) 
     helps.approval_status = "Approved"
     helps.save()
 
     #search for and activate the customer that provided help
-    help_provider = helps.provider
-    customer = Customer.objects.get(username=help_provider)
-    customer.save()
+    #help_provider = helps.provider
+    #customer = Customer.objects.get(username=help_provider)
+    #customer.save()
 
     messages.success(request, 'Your approval is successfull')
     return redirect('admin_panel')

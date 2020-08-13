@@ -52,38 +52,13 @@ class Customer(models.Model):
 
         total_ref_spending = []
         for reff in reffs:
-            total_ref_spending.append(reff.total_user_investments)
+            total_ref_spending.append(float(reff.total_user_investments) * 0.03)
         sum_of_refs = sum(total_ref_spending)
+        
         if int(sum_of_refs) > int(latest_max_setting.amount):
             return latest_max_setting.amount
         else:
             return sum_of_refs
-
-
-    @property
-    def check_user_eligibility(self):
-
-        latest_percentage_returns_setting = PercentageReturn.objects.all().order_by('-date').first()
-        latest = float(latest_percentage_returns_setting.amount) * 0.01
-        latest_setting = 1 + int(latest)
-
-        eligible = False
-        total_investments = HelpTable.objects.all() 
-        investments = []
-        receipts = []
-        for total_investment in total_investments:
-            if total_investment.provider == self.username:
-                investments.append(int(total_investment.amount))
-            if total_investment.receiver == self:
-                receipts.append(int(total_investment.amount))
-        invest_sum = sum(investments)
-        receipts_sum = sum(receipts)
-        if receipts_sum < (int(latest_setting) * int(invest_sum)):
-            eligible = True
-        else:
-            eligible = False
-
-        return eligible
 
     @property
     def total_user_investments(self):
@@ -111,6 +86,28 @@ class Customer(models.Model):
         downlines = Customer.objects.filter(sponsor=self.username).count()
         return downlines
 
+    @property
+    def total_returns(self):
+        latest_percentage_returns_setting = PercentageReturn.objects.all().order_by('-date').first()
+        latest = float(latest_percentage_returns_setting.amount) * 0.01
+        latest_setting = float(1) + float(latest)
+
+        return self.total_user_investments * latest_setting
+
+
+    @property
+    def net_balance(self):
+        amount = self.check_ref_bonus + self.total_returns
+        return amount - self.total_user_withdrawals
+
+
+    @property
+    def check_user_eligibility(self):
+        if net_balance < 0:
+            return False
+        else:
+            return True
+    print(check_user_eligibility)
 
 class HelpTable(models.Model):
 

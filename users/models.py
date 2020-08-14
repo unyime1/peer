@@ -46,6 +46,16 @@ class Customer(models.Model):
         return str(self.username)
 
     @property
+    def activation_proofURL(self):
+        """this function solves the error associated with empty image fields"""
+        try:
+            url = self.proof_of_activation_fee.url
+        except:
+            url = ''
+        return url
+    
+    
+    @property
     def check_ref_bonus(self):
         reffs = Customer.objects.filter(sponsor=self.username)
         latest_max_setting = ReferralBonus.objects.all().order_by('-date').first()

@@ -36,7 +36,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = SECRET_KEY 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True     
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -116,7 +116,7 @@ if os.getenv('GAE_APPLICATION', None):
             'HOST': HOST,
             'USER': USER,
             'PASSWORD': PASSWORD,
-            'NAME': 'updated_db',
+            'NAME': 'db_9',
         }
     }
 else:
@@ -131,7 +131,7 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '127.0.0.1',
             'PORT': '3306',
-            'NAME': 'updated_db',   
+            'NAME': 'db_9',   
             'USER': USER,
             'PASSWORD': PASSWORD,
         }

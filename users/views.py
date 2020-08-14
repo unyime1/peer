@@ -681,6 +681,6 @@ def activation_fee_receipts_user(request):
     inactive_members_count = inactive_customers.count()
 
     context = {'inactive_customers':inactive_customers, 'inactive_members_count':inactive_members_count}
-    return render(request, 'admins/activation_fee_receipts.html', context)
+    return render(request, 'users/activation_fee_receipts.html', context)
 
 

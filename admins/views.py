@@ -566,6 +566,7 @@ def activationFeeSetting(request):
     return render(request, 'admins/activation_fee_setting.html', context) 
 
 
+@login_required(login_url='login')
 def activation_fee_receipts(request):
     """this page handles the activation fee receipts page"""
 

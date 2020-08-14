@@ -53,7 +53,7 @@ post_save.connect(send_message_on_registration, sender=User)
 
 def send_message_on_activation(sender, instance, created, **kwargs):
     """send welcome message to new members"""
-    if created:
+    if created:    
         if instance.activate:
             customer_first_name = instance.first_name.capitalize()
             customer_last_name = instance.last_name.capitalize()

@@ -97,16 +97,16 @@ class AddressForm(forms.Form):
         else:
             return phone_number
 
-    def clean_sponsor(self):
-        """this function handles phonenumber cleaning"""
+    def clean_sponsor(self):  
         sponsor = self.cleaned_data['sponsor']
+        if not self.data['sponsor']:
+            return sponsor
+
         match = Customer.objects.filter(sponsor=sponsor).exists()
-        
         if match:
             return sponsor
         else:
             raise forms.ValidationError(_('We do not have this user on our system. Please confirm your entry'))
-            
     
            
 

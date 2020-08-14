@@ -145,7 +145,7 @@ def userLogin(request):
                 login(request, user)
 
                 if user.customer.address_info_complete == False:
-                    messages.error(request, 'Hello ' +  username + ', please save your address!')
+                    messages.error(request, 'Hello ' +  username + ', let us know more about you.')
                     return redirect('address')
 
                 if user.customer.banking_info_complete == False:

@@ -94,7 +94,8 @@
                             <h4 class="alert-heading">Provide Help Alert</h4>
                             <p>
                                 Hello {{customer.first_name|title}}, you have been merged. Please head over to <a href="{% url 'merge_details' %}">this page</a> for details.
-                                You must pay before 10 hours is up or your account will be suspended.
+                                You must pay before 5 hours is up or your account will be suspended. However, if you were merged
+                                from 10pm, you have 12 hours to pay up.
                             </p>
                             <hr>
                             <h5> Minutes Left:</h5>
@@ -118,7 +119,7 @@
                                 tick();
                                 }
 
-                                countdown(36000);
+                                countdown(18000);
 
                             </script>
                         </div>
@@ -188,7 +189,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
 
                 <div class="col-md-4 mb-4">

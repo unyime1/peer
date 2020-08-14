@@ -96,6 +96,18 @@ class AddressForm(forms.Form):
             raise forms.ValidationError(_('The phone number already exists. Choose another'))
         else:
             return phone_number
+
+    def clean_sponsor(self):
+        """this function handles phonenumber cleaning"""
+        sponsor = self.cleaned_data['sponsor']
+        match = Customer.objects.filter(sponsor=sponsor).exists()
+        
+        if match:
+            return sponsor
+        else:
+            raise forms.ValidationError(_('We do not have this user on our system. Please confirm your entry'))
+            
+    
            
 
 

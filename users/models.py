@@ -87,7 +87,7 @@ class Customer(models.Model):
         total_investments = HelpTable.objects.filter(approval_status='Approved') 
         
         for total_investment in total_investments:
-            if total_investment.receiver == self:
+            if total_investment.receiver == self.username:
                 investments.append(int(total_investment.amount)) 
         return sum(investments)
         
@@ -175,7 +175,7 @@ class ReceiverTable(models.Model):
     receiver = models.CharField(max_length=400, null=True, blank=True)    
     amount = models.CharField(max_length=400, null=True, blank=True)    
     date = models.DateTimeField(auto_now_add=True, null=True)
-    status = models.CharField(max_length=200, null=True, blank=True, choices=APPROVAL, default='Not Approved')
+    status = models.CharField(max_length=200, null=True, blank=True, choices=APPROVAL, default='Approved')
     complete = models.BooleanField(default=False)
 
     def __str__(self):

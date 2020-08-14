@@ -379,7 +379,7 @@ def userWithdrawalPage(request):
 
             #if the number of days elapsed is less than the minimum set in site settings
             if int(time_betw.days) < int(latest_days_setting.amount):
-                messages.warning(request, 'Hello ' + customer.first_name.title() + ', your last investment has not matured yet. Wait a few more days before trying again. ')
+                messages.warning(request, 'Hello ' + customer.first_name.title() + ', your last investment has not matured yet. Wait a few more hours before trying again. ')
                 return redirect('withdrawal_page')
             if int(amount) > int(largest_investment):
                 messages.warning(request, 'Hello ' + customer.first_name.title() + ', the highest amount you have invested is ₦' + str(largest_investment) + '. At the moment, you cannot withdraw above that.')

@@ -109,6 +109,8 @@ class Customer(models.Model):
             return True
     print(check_user_eligibility)
 
+    
+
 class HelpTable(models.Model):
 
     APPROVAL = (

@@ -9,8 +9,12 @@ cryptography==3.0
 decorator==4.4.2
 Django==3.1
 django-crispy-forms==1.9.2
+django-jsonfield==1.4.0
+django-picklefield==3.0.1
+django-sms-gateway==1.2.1
 django-storages==1.9.1
 django-summernote==0.8.11.6
+django-uuidfield-2==0.6.6
 docutils==0.15.2
 google-api-core==1.22.0
 google-auth==1.20.1

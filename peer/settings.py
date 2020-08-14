@@ -62,6 +62,7 @@ INSTALLED_APPS = [
 
     #enables addition of sites in db
     'django.contrib.sites',
+
 ]
 
 SITE_ID = 1

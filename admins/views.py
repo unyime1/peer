@@ -19,7 +19,10 @@ from mains.decorators import *
 def adminDashboard(request):
     """this function handles the admin dashboard view"""
     users_count = User.objects.all().count()
-    
+    blocked_users_count = User.objects.filter(is_active=False).count()
+    active_users_count = Customer.objects.filter(activate=True).count()
+    inactive_users_count = Customer.objects.filter(activate=False).count()
+
     help_amounts = HelpTable.objects.filter(approval_status='Approved')
     total_help_given_list = []
     total_help_received_list = []
@@ -30,7 +33,9 @@ def adminDashboard(request):
     total_help_received = sum(total_help_received_list)
 
     context = {
-        'users_count':users_count, 'total_help_given':total_help_given, 'total_help_received':total_help_received
+        'users_count':users_count, 'total_help_given':total_help_given, 'total_help_received':total_help_received,
+        'blocked_users_count':blocked_users_count, "active_users_count":active_users_count,
+        'inactive_users_count':inactive_users_count,
     }
     return render(request, 'admins/dashboard.html', context)
 

@@ -75,7 +75,7 @@ def addAddress(request):
             #state = form.cleaned_data['state']
             phone_number = form.cleaned_data['phone_number']
             sponsor = form.cleaned_data['sponsor']
-
+            
             #Address.objects.create(
             #    customer=customer,
             #    address=address,
@@ -86,8 +86,8 @@ def addAddress(request):
             customer_update = Customer.objects.get(username=customer.username)
             customer_update.phone_number = phone_number
             customer_update.sponsor = sponsor
-            customer.address_info_complete = True
-            customer.save()
+            customer_update.address_info_complete = True
+            customer_update.save()
 
             messages.success(request, 'Please submit your banking information.')
             return redirect('bank')
@@ -310,16 +310,17 @@ def userWithdrawalHistory(request):
 @login_required(login_url='login')
 def userApproveHelp(request, withdrawal_id):
     helps = HelpTable.objects.get(id=withdrawal_id)
-    helps.approval_status = "Approved"
-    helps.save()
 
-    #search for and activate the customer that provided help
-    help_provider = helps.provider
-    customer = Customer.objects.get(username=help_provider)
-    customer.save()
+    #check if help has a proof of payment
+    if not helps.user_proof:
+        messages.error(request, 'Helper must upload proof of payment before help can be approved.')
+        return redirect('profile')
+    else:
+        helps.approval_status = "Approved"
+        helps.save()
+        messages.success(request, 'Your approval is successfull')
+    return redirect('admin_panel') 
 
-    messages.success(request, 'Your approval is successfull')
-    return redirect('profile')
 
 
 @activation_fee
@@ -624,7 +625,6 @@ def userDashboard(request):
     """this function handles the profile view""" 
 
     customer = request.user.customer
-
     #account details stuff
     latest_act_fee_setting = ActivationFeeSetting.objects.all().order_by('-date').first()
     if latest_act_fee_setting == "Admin":    
@@ -632,7 +632,9 @@ def userDashboard(request):
     else:
         try:
             sponsor = customer.sponsor
+            
             sponsor_profile = Customer.objects.get(username=sponsor)
+
             latest_account_details_setting = sponsor_profile.bank
         except:
             latest_account_details_setting = AdminAccountSetting.objects.all().order_by('-date').first()
@@ -678,9 +680,9 @@ def activation_fee_receipts_user(request):
 
     customer = request.user.customer
     inactive_customers = Customer.objects.filter(activate=False, sponsor=customer.username)
-    inactive_members_count = inactive_customers.count()
+    
 
-    context = {'inactive_customers':inactive_customers, 'inactive_members_count':inactive_members_count}
+    context = {'inactive_customers':inactive_customers,}
     return render(request, 'users/activation_fee_receipts.html', context)
 
 

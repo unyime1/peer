@@ -20,7 +20,7 @@ class Banking(models.Model):
     account_type = models.CharField(max_length=200, null=True)
 
     def __str__(self): 
-        return str(self.customer.username)
+        return str(self.account_name)
 
 # Create your models here.
 class Customer(models.Model): 

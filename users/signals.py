@@ -34,8 +34,8 @@ def send_message_on_registration(sender, instance, created, **kwargs):
     """send welcome message to new members"""
 
     if created:
-        customer_first_name = instance.customer.first_name.capitalize()
-        customer_last_name = instance.customer.last_name.capitalize()
+        customer_first_name = instance.customer.first_name.title()
+        customer_last_name = instance.customer.last_name.title()
         customer_username = instance.customer.username
 
         message_html = render_to_string('users/telegram_message_on_registration.html', {
@@ -55,8 +55,8 @@ def send_message_on_activation(sender, instance, created, **kwargs):
     """send welcome message to new members"""
         
     if instance.activate:
-        customer_first_name = instance.first_name.capitalize()
-        customer_last_name = instance.last_name.capitalize()
+        customer_first_name = instance.first_name.title()
+        customer_last_name = instance.last_name.title()
         customer_username = instance.username
 
         message_html = render_to_string('users/telegram_message_on_activation.html', {
@@ -82,8 +82,8 @@ def send_message_on_PH(sender, instance, created, **kwargs):
         provider = instance.provider
         amount = instance.amount
         profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.capitalize()
-        last_name = profile.last_name.capitalize()
+        first_name = profile.first_name.title()
+        last_name = profile.last_name.title()
 
         message_html = render_to_string('users/telegram_message_on_ph.html', {
             'first_name':first_name,
@@ -108,12 +108,12 @@ def send_message_on_PH_Merge(sender, instance, **kwargs):
 
         amount = instance.amount
         profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.capitalize()
-        last_name = profile.last_name.capitalize()
+        first_name = profile.first_name.title()
+        last_name = profile.last_name.title()
 
         receiver_profile = Customer.objects.get(username=receiver)
-        receiver_first_name = receiver_profile.first_name
-        receiver_last_name = receiver_profile.last_name
+        receiver_first_name = receiver_profile.first_name.title()
+        receiver_last_name = receiver_profile.last_name.title()
 
         message_html = render_to_string('users/telegram_message_on_ph_merge.html', {
             'first_name':first_name,
@@ -141,12 +141,12 @@ def send_message_on_confirmed_PH(sender, instance, **kwargs):
 
         amount = instance.amount
         profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.capitalize()
-        last_name = profile.last_name.capitalize()
+        first_name = profile.first_name.title()
+        last_name = profile.last_name.title()
 
         receiver_profile = Customer.objects.get(username=receiver)
-        receiver_first_name = receiver_profile.first_name
-        receiver_last_name = receiver_profile.last_name
+        receiver_first_name = receiver_profile.first_name.title()
+        receiver_last_name = receiver_profile.last_name.title()
 
         message_html = render_to_string('users/telegram_message_on_confirmed_PH.html', {
             'first_name':first_name,
@@ -173,12 +173,12 @@ def send_message_on_PH_proof_submit(sender, instance, **kwargs):
 
         amount = instance.amount
         profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.capitalize()
-        last_name = profile.last_name.capitalize()
+        first_name = profile.first_name.title()
+        last_name = profile.last_name.title()
 
         receiver_profile = Customer.objects.get(username=receiver)
-        receiver_first_name = receiver_profile.first_name
-        receiver_last_name = receiver_profile.last_name
+        receiver_first_name = receiver_profile.first_name.title()
+        receiver_last_name = receiver_profile.last_name.title()
 
         message_html = render_to_string('users/send_message_on_PH_proof_submit.html', {
             'first_name':first_name,

@@ -49,6 +49,30 @@ def send_message_on_registration(sender, instance, created, **kwargs):
 post_save.connect(send_message_on_registration, sender=User) 
 
 
+
+def send_message_on_activation_proof(sender, instance, created, **kwargs):
+    """send welcome message to new members"""
+        
+    if instance.proof_of_activation_fee:
+        customer_username = instance.username
+        
+
+        message_html = render_to_string('users/telegram_message_on_activation_proof.html', {
+
+            'customer_username':customer_username,
+
+        })
+        telegram_settings = settings.TELEGRAM
+        bot = telegram.Bot(token=telegram_settings['bot_token'])
+        #photo =  instance.activation_proofURL
+
+        bot.send_message(chat_id="@%s" % telegram_settings['channel_name'],
+            text=message_html, parse_mode=telegram.ParseMode.HTML)
+        #bot.sendPhoto(chat_id="@%s" % telegram_settings['channel_name'], photo=photo)
+post_save.connect(send_message_on_activation_proof, sender=Customer) 
+
+
+
 def send_message_on_activation(sender, instance, created, **kwargs):
     """send welcome message to new members"""
         

@@ -117,9 +117,37 @@ class Customer(models.Model):
             return False
         else:
             return True
-    print(check_user_eligibility)
+ 
 
-    
+    @property
+    def check_user_PH_balance(self):
+        amount_list = []
+        amount2_list = []
+
+        investments = HelpTable.objects.filter(provider=self.username).order_by('merge_date')
+        
+        #loop through the amount2 column and add each amount to investment list
+        for investment in investments:
+            amount_list.append(investment.amount)
+            amount2_list.append(investment.amount2)
+
+        #pick the last on the list
+        last_PH_request = amount_list[-1]
+        last_PH_merge = amount2_list[-1]
+
+        #initialize last PH merge and requests to zero if value is none
+        if last_PH_merge is None:
+            last_PH_merge = 0
+
+        if last_PH_request is None:
+            last_PH_request = 0
+
+        #compute the balance left after PH
+        balance_after_PH = int(last_PH_request) - int(last_PH_merge)
+        
+        return balance_after_PH
+
+
 
 class HelpTable(models.Model):
 
@@ -132,6 +160,7 @@ class HelpTable(models.Model):
     receiver = models.CharField(max_length=400, null=True, blank=True)
     provider = models.CharField(max_length=400, null=True, blank=True)
     amount = models.CharField(max_length=400, null=True, blank=True)
+    amount2 = models.CharField(max_length=400, null=True, blank=True)
     approval_status = models.CharField(max_length=200, null=True, blank=True, choices=APPROVAL, default='Not Approved')
     transaction_id = models.CharField(max_length=200, null=True, blank=True)
     merge_date = models.DateTimeField(auto_now_add=True, null=True)

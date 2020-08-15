@@ -571,8 +571,8 @@ def activation_fee_receipts(request):
     """this page handles the activation fee receipts page"""
 
     inactive_customers = Customer.objects.filter(activate=False)
-    inactive_members_count = inactive_customers.count()
+    
     
 
-    context = {'inactive_customers':inactive_customers, 'inactive_members_count':inactive_members_count}
+    context = {'inactive_customers':inactive_customers}
     return render(request, 'admins/activation_fee_receipts.html', context)

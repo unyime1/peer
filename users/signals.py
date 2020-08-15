@@ -53,25 +53,25 @@ post_save.connect(send_message_on_registration, sender=User)
 
 def send_message_on_activation(sender, instance, created, **kwargs):
     """send welcome message to new members"""
-    if created:    
-        if instance.activate:
-            customer_first_name = instance.first_name.capitalize()
-            customer_last_name = instance.last_name.capitalize()
-            customer_username = instance.username
+        
+    if instance.activate:
+        customer_first_name = instance.first_name.capitalize()
+        customer_last_name = instance.last_name.capitalize()
+        customer_username = instance.username
 
-            message_html = render_to_string('users/telegram_message_on_activation.html', {
+        message_html = render_to_string('users/telegram_message_on_activation.html', {
 
-                'customer_username':customer_username,
-                'customer_first_name':customer_first_name,
-                'customer_last_name':customer_last_name
+            'customer_username':customer_username,
+            'customer_first_name':customer_first_name,
+            'customer_last_name':customer_last_name
 
 
-            })
-            telegram_settings = settings.TELEGRAM
-            bot = telegram.Bot(token=telegram_settings['bot_token'])
-            
-            bot.send_message(chat_id="@%s" % telegram_settings['channel_name'],
-                text=message_html, parse_mode=telegram.ParseMode.HTML)
+        })
+        telegram_settings = settings.TELEGRAM
+        bot = telegram.Bot(token=telegram_settings['bot_token'])
+        
+        bot.send_message(chat_id="@%s" % telegram_settings['channel_name'],
+            text=message_html, parse_mode=telegram.ParseMode.HTML)
 post_save.connect(send_message_on_activation, sender=Customer) 
 
 

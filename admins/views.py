@@ -58,7 +58,6 @@ def userList(request):
     return render(request, 'admins/all_users.html', context)
 
 
-@admin_only
 @login_required(login_url='login')
 def aproveActivation(request, user_id):
     user = Customer.objects.get(id=user_id)

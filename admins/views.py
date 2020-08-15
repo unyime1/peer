@@ -61,11 +61,13 @@ def userList(request):
 @login_required(login_url='login')
 def aproveActivation(request, user_id):
     user = Customer.objects.get(id=user_id)
-    user.activate = True
-    user.save()
-    messages.success(request, 'Your approval was successfull')
-    return redirect('admin_panel')
-
+    if user.proof_of_activation_fee:
+        user.activate = True
+        user.save()
+        messages.success(request, 'Your approval was successfull')
+        return redirect('admin_panel')
+    else:
+        messages.error(request, 'The proof of activation fee must be submitted before you can approve payment')
 
 
 @admin_only

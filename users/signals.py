@@ -34,12 +34,10 @@ def send_message_on_registration(sender, instance, created, **kwargs):
     """send welcome message to new members"""
 
     if created:
-        customer_first_name = instance.customer.first_name.title()
-        customer_last_name = instance.customer.last_name.title()
-        customer_username = instance.customer.username
+        customer_username =  instance.username 
 
         message_html = render_to_string('users/telegram_message_on_registration.html', {
-
+   
             'customer_username':customer_username,
 
         })
@@ -55,25 +53,21 @@ def send_message_on_activation(sender, instance, created, **kwargs):
     """send welcome message to new members"""
         
     if instance.activate:
-        customer_first_name = instance.first_name.title()
-        customer_last_name = instance.last_name.title()
         customer_username = instance.username
+        
 
         message_html = render_to_string('users/telegram_message_on_activation.html', {
 
             'customer_username':customer_username,
-            'customer_first_name':customer_first_name,
-            'customer_last_name':customer_last_name
-
 
         })
         telegram_settings = settings.TELEGRAM
         bot = telegram.Bot(token=telegram_settings['bot_token'])
-        photo =  instance.activation_proofURL
+        #photo =  instance.activation_proofURL
 
         bot.send_message(chat_id="@%s" % telegram_settings['channel_name'],
             text=message_html, parse_mode=telegram.ParseMode.HTML)
-        bot.sendPhoto(chat_id="@%s" % telegram_settings['channel_name'], photo=photo)
+        #bot.sendPhoto(chat_id="@%s" % telegram_settings['channel_name'], photo=photo)
 post_save.connect(send_message_on_activation, sender=Customer) 
 
 
@@ -83,13 +77,9 @@ def send_message_on_PH(sender, instance, created, **kwargs):
     if created:
         provider = instance.provider
         amount = instance.amount
-        profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.title()
-        last_name = profile.last_name.title()
 
         message_html = render_to_string('users/telegram_message_on_ph.html', {
-            'first_name':first_name,
-            'last_name':last_name,
+            'provider':provider,
             'amount':amount,
 
         })
@@ -104,25 +94,15 @@ post_save.connect(send_message_on_PH, sender=HelpTable)
 def send_message_on_PH_Merge(sender, instance, **kwargs):
     """send welcome message to new members"""
     
-    if instance.receiver and instance.approval_status == "Not Approved":
+    if instance.receiver and instance.approval_status == "Not Approved" and not instance.user_proof:
         provider = instance.provider
         receiver = instance.receiver
-
         amount = instance.amount
-        profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.title()
-        last_name = profile.last_name.title()
-
-        receiver_profile = Customer.objects.get(username=receiver)
-        receiver_first_name = receiver_profile.first_name.title()
-        receiver_last_name = receiver_profile.last_name.title()
 
         message_html = render_to_string('users/telegram_message_on_ph_merge.html', {
-            'first_name':first_name,
-            'last_name':last_name,
-            'amount':amount,
-            'receiver_first_name':receiver_first_name,
-            'receiver_last_name':receiver_last_name
+            'provider':provider,
+            'receiver':receiver,
+            'amount':amount
 
         })
         telegram_settings = settings.TELEGRAM
@@ -139,33 +119,23 @@ def send_message_on_PH_proof_submit(sender, instance, **kwargs):
     if instance.approval_status == "Not Approved" and instance.user_proof:
         provider = instance.provider
         receiver = instance.receiver
-
         amount = instance.amount
-        profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.title()
-        last_name = profile.last_name.title()
-
-        receiver_profile = Customer.objects.get(username=receiver)
-        receiver_first_name = receiver_profile.first_name.title()
-        receiver_last_name = receiver_profile.last_name.title()
+       
 
         message_html = render_to_string('users/send_message_on_PH_proof_submit.html', {
-            'first_name':first_name,
-            'last_name':last_name,
+            'provider':provider,
+            'receiver':receiver,
             'amount':amount,
-            'receiver_first_name':receiver_first_name,
-            'receiver_last_name':receiver_last_name
-
+            
         })
-        photo =  instance.user_proofURL
+        #photo =  instance.user_proofURL
         telegram_settings = settings.TELEGRAM
         bot = telegram.Bot(token=telegram_settings['bot_token'])
         
         bot.send_message(chat_id="@%s" % telegram_settings['channel_name'],
         text=message_html, parse_mode=telegram.ParseMode.HTML)
-        bot.sendPhoto(chat_id="@%s" % telegram_settings['channel_name'], photo=photo)
+        #bot.sendPhoto(chat_id="@%s" % telegram_settings['channel_name'], photo=photo)
 post_save.connect(send_message_on_PH_proof_submit, sender=HelpTable)
-
 
 
 
@@ -177,20 +147,11 @@ def send_message_on_confirmed_PH(sender, instance, **kwargs):
         receiver = instance.receiver
 
         amount = instance.amount
-        profile = Customer.objects.get(username=provider)
-        first_name = profile.first_name.title()
-        last_name = profile.last_name.title()
-
-        receiver_profile = Customer.objects.get(username=receiver)
-        receiver_first_name = receiver_profile.first_name.title()
-        receiver_last_name = receiver_profile.last_name.title() 
 
         message_html = render_to_string('users/telegram_message_on_confirmed_PH.html', {
-            'first_name':first_name,
-            'last_name':last_name,
+            'provider':provider,
+            'receiver':receiver,
             'amount':amount,
-            'receiver_first_name':receiver_first_name,
-            'receiver_last_name':receiver_last_name
 
         })
         telegram_settings = settings.TELEGRAM

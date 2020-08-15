@@ -85,7 +85,7 @@ class AddressForm(forms.Form):
     #city = forms.CharField(max_length=100, required=True, label='City', widget=forms.TextInput(attrs={'placeholder': 'City'}))
     #state = forms.ChoiceField(choices=STATES)
     phone_number = forms.CharField(max_length=40, required=True, label='Phone Number', widget=forms.TextInput(attrs={'type':'number','placeholder': 'Phone Number'}))
-    sponsor = forms.CharField(max_length=40, required=False, label='Sponsor', widget=forms.TextInput(attrs={'placeholder': "Input Your Referrer's/Sponsor's Username"}))
+    sponsor = forms.CharField(max_length=40, required=False, label='Sponsor', widget=forms.TextInput(attrs={'placeholder': "Referrer's/Sponsor's Username(Optional)"}))
 
     def clean_phone_number(self):
         """this function handles phonenumber cleaning"""

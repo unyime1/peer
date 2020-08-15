@@ -132,9 +132,12 @@ class Customer(models.Model):
             amount2_list.append(investment.amount2)
 
         #pick the last on the list
-        last_PH_request = amount_list[-1]
-        last_PH_merge = amount2_list[-1]
-
+        try:
+            last_PH_merge = amount_list[-1]
+            last_PH_request = amount2_list[-1]
+        except:
+            last_PH_merge = 0
+            last_PH_request = 0
         #initialize last PH merge and requests to zero if value is none
         if last_PH_merge is None:
             last_PH_merge = 0

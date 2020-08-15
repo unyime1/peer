@@ -191,11 +191,14 @@ def proofOfPayment(request):
             image = form.cleaned_data['image']
 
             help_data = HelpTable.objects.get(transaction_id=transaction_id)
-            help_data.user_proof = image
-            help_data.save()
-
-            messages.success(request, 'Your proof of payment has been submitted for approval.')
-            return redirect('profile')
+            if help_data.receiver:
+                help_data.user_proof = image
+                help_data.save()
+                messages.success(request, 'Your proof of payment has been submitted for approval.')
+                return redirect('profile')
+            else:
+                messages.error(request, 'You have not been merged yet. Please wait a few more hours')
+                return redirect('profile')
     else:
         form = ProofOfPaymentForm()
 
@@ -466,6 +469,7 @@ def investmentPage(request):
                 HelpTable.objects.create(
                     provider=customer.username,
                     amount=amount,
+                    amount2=amount,
                     transaction_id=transaction_id,
                     )
 

@@ -99,10 +99,12 @@ class AddressForm(forms.Form):
 
     def clean_sponsor(self):  
         sponsor = self.cleaned_data['sponsor']
+        
         if not self.data['sponsor']:
             return sponsor
 
-        match = Customer.objects.filter(sponsor=sponsor).exists()
+        match = Customer.objects.filter(username=sponsor).exists()
+        
         if match:
             return sponsor
         else:

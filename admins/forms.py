@@ -20,7 +20,7 @@ class MergeForm(ModelForm):
 
 
 class MinimumPHForm(ModelForm):
-    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'placeholder': 'Please Input an Amount without comma.'}))
+    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please Input an Amount without comma.'}))
 
     class Meta:
         model = MinimumPH
@@ -28,7 +28,7 @@ class MinimumPHForm(ModelForm):
 
 
 class MaxPHForm(ModelForm):
-    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'placeholder': 'Please Input an Amount without comma.'}))
+    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please Input an Amount without comma.'}))
 
     class Meta:
         model = MaxPH
@@ -36,7 +36,7 @@ class MaxPHForm(ModelForm):
 
 
 class PercentageReturnForm(ModelForm):
-    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'placeholder': 'Please include a value'}))
+    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please include a value'}))
 
     class Meta:
         model = PercentageReturn
@@ -53,7 +53,7 @@ class DownPaymentForm(ModelForm):
 
 
 class DaysToGHForm(ModelForm):
-    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'placeholder': 'Please include a value'}))
+    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please include a value'}))
 
     class Meta:
         model = DaystoGH
@@ -61,7 +61,7 @@ class DaysToGHForm(ModelForm):
 
 
 class ReferralBonusForm(ModelForm):
-    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'placeholder': 'Please include a value'}))
+    amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please include a value'}))
 
     class Meta:
         model = ReferralBonus
@@ -71,7 +71,7 @@ class ReferralBonusForm(ModelForm):
 class MergeCustomersForm(forms.Form):
     provider = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}))
     receiver = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}))
-    amount = forms.CharField(max_length=180, label='Amount', widget=forms.TextInput(attrs={'placeholder': 'Please Input an Amount'}))
+    amount = forms.CharField(max_length=180, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please Input an Amount'}))
     transaction_id = forms.CharField(max_length=180, required=True, label='Transaction ID', widget=forms.TextInput(attrs={'placeholder': 'Please Input Your Transaction ID'}))
 
     def clean_transaction_id(self):
@@ -111,3 +111,4 @@ class ActivationFeeSettingForm(ModelForm):
     class Meta:
         model = ActivationFeeSetting
         fields = ['option']
+    

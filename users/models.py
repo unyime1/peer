@@ -79,7 +79,7 @@ class Customer(models.Model):
             if total_investment.provider == self.username:
                 investments.append(int(total_investment.amount)) 
         return sum(investments)
-        
+            
 
     @property
     def total_user_withdrawals(self):
@@ -113,7 +113,7 @@ class Customer(models.Model):
 
     @property
     def check_user_eligibility(self):
-        if net_balance < 0:
+        if self.net_balance < 0:
             return False
         else:
             return True

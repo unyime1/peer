@@ -106,7 +106,7 @@ class AddressForm(forms.Form):
         match = Customer.objects.filter(username=sponsor).exists()
         
         if match:
-            return sponsor
+            return sponsor   
         else:
             raise forms.ValidationError(_('We do not have this user on our system. Please confirm your entry'))
     

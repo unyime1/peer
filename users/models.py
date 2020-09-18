@@ -1,3 +1,5 @@
+"""this module holds the users app models"""
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -14,6 +16,7 @@ class Address(models.Model):
 
 
 class Banking(models.Model):
+    """this model defines the banking information table"""
     bank_name = models.CharField(max_length=200, null=True)
     account_name = models.CharField(max_length=200, null=True)
     account_number = models.CharField(max_length=200, null=True)
@@ -24,7 +27,7 @@ class Banking(models.Model):
 
 # Create your models here.
 class Customer(models.Model): 
-    """this model handles the store users"""
+    """this model defines the customer information table"""
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
@@ -57,6 +60,7 @@ class Customer(models.Model):
     
     @property
     def check_ref_bonus(self):
+        """this function calculates user reff bonus"""
         reffs = Customer.objects.filter(sponsor=self.username)
         latest_max_setting = ReferralBonus.objects.all().order_by('-date').first()
 
@@ -72,6 +76,7 @@ class Customer(models.Model):
 
     @property
     def total_user_investments(self):
+        """this function calculates the total user investments"""
         investments = []
         total_investments = HelpTable.objects.filter(approval_status='Approved')  
 
@@ -83,6 +88,7 @@ class Customer(models.Model):
 
     @property
     def total_user_withdrawals(self):
+        """this function calculates the total user withdrawals"""
         investments = []
         total_investments = HelpTable.objects.filter(approval_status='Approved') 
         
@@ -93,11 +99,13 @@ class Customer(models.Model):
         
     @property
     def total_downlines(self):
+        """this function evaluates the total user downlines"""
         downlines = Customer.objects.filter(sponsor=self.username).count()
         return downlines
 
     @property
     def total_returns(self):
+        """this function calculates the total user investment returns"""
         latest_percentage_returns_setting = PercentageReturn.objects.all().order_by('-date').first()
         latest = float(latest_percentage_returns_setting.amount) * 0.01
         latest_setting = float(1) + float(latest)
@@ -107,12 +115,14 @@ class Customer(models.Model):
 
     @property
     def net_balance(self):
+        """this function calculates the total user net balamce"""
         amount = self.check_ref_bonus + self.total_returns
         return amount - self.total_user_withdrawals
 
 
     @property
     def check_user_eligibility(self):
+        """this function calculates a user eligibility to withdraw"""
         if self.net_balance < 0:
             return False
         else:
@@ -121,6 +131,7 @@ class Customer(models.Model):
 
     @property
     def check_user_PH_balance(self):
+        """this function checks a users balance after PH"""
         amount_list = []
         amount2_list = []
 
@@ -153,7 +164,7 @@ class Customer(models.Model):
 
 
 class HelpTable(models.Model):
-
+    """this model defines the help table"""
     APPROVAL = (
         ('Approved', 'Approved'),
         ('Not Approved', 'Not Approved'),
@@ -176,7 +187,7 @@ class HelpTable(models.Model):
 
     @property
     def get_help_amount(self):
-        """This property calculates the 10% down payment for each help"""
+        """This property calculates the get help amount"""
         
         get_amount = self.amount
        
@@ -184,6 +195,7 @@ class HelpTable(models.Model):
 
     @property
     def get_provider_phone(self):
+        """this function gets the provider phone number"""
         data = self.provider
         provider_details = Customer.objects.get(username=data)
         number = provider_details.phone_number
@@ -200,6 +212,7 @@ class HelpTable(models.Model):
 
 
 class ReceiverTable(models.Model):
+    """this model handles the receiver table"""
     APPROVAL = (
         ('Approved', 'Approved'),
         ('Not Approved', 'Not Approved'),
@@ -217,6 +230,7 @@ class ReceiverTable(models.Model):
 
 
 class Merge(models.Model):
+    """this model handles the merge table"""
     STATUS = (
         ('Automatic', 'Automatic'),
         ('Manual', 'Manual'),
@@ -231,6 +245,8 @@ class Merge(models.Model):
 
 
 class MinimumPH(models.Model):
+    #ignore. Not used in the code
+
     amount = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     
@@ -239,6 +255,7 @@ class MinimumPH(models.Model):
 
 
 class MaxPH(models.Model):
+    #ignore. Not used in the code
     amount = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     
@@ -246,6 +263,7 @@ class MaxPH(models.Model):
         return str(self.amount)
 
 class PercentageReturn(models.Model):
+    #ignore. Not used in the code
     amount = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     
@@ -263,6 +281,7 @@ class DownPaymentPercentage(models.Model):
 
 
 class DaystoGH(models.Model):
+    #ignore. Not used in the code
     amount = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     
@@ -271,6 +290,7 @@ class DaystoGH(models.Model):
 
 
 class ReferralBonus(models.Model):
+    #ignore. Not used in the code
     amount = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
     
@@ -279,6 +299,7 @@ class ReferralBonus(models.Model):
 
 
 class AdminAccountSetting(models.Model):
+    #ignore. Not used in the code
     bank_name = models.CharField(max_length=200, null=True, blank=True)
     account_name = models.CharField(max_length=200, null=True, blank=True)
     account_number = models.CharField(max_length=200, null=True, blank=True)
@@ -290,6 +311,7 @@ class AdminAccountSetting(models.Model):
 
 
 class ActivationFeeSetting(models.Model):
+    #ignore. Not used in the code
     STATUS = (
         ('Admin', 'Admin'),
         ('Referrer', 'Referrer'),

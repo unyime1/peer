@@ -1,3 +1,5 @@
+"""this module holds the admins app views"""
+
 from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -60,6 +62,7 @@ def userList(request):
 
 @login_required(login_url='login')
 def aproveActivation(request, user_id):
+    """this function handles activation approval"""
     user = Customer.objects.get(id=user_id)
     if user.proof_of_activation_fee:
         user.activate = True
@@ -85,6 +88,7 @@ def bannedUsers(request):
 @admin_only
 @login_required(login_url='login')
 def blockUser(request, user_id):
+    """this function handles user blocking"""
     user = User.objects.get(id=user_id)
     user.is_active = False
     user.save()
@@ -96,6 +100,7 @@ def blockUser(request, user_id):
 @admin_only
 @login_required(login_url='login')
 def unblockUser(request, user_id):
+    """this function handles user unblocking"""
     user = User.objects.get(id=user_id)
     user.is_active = True
     user.save()
@@ -107,6 +112,7 @@ def unblockUser(request, user_id):
 @admin_only
 @login_required(login_url='login')
 def deleteUser(request, user_id):
+    """this function handles user delete"""
     user = User.objects.get(id=user_id)
     user.delete()
     messages.success(request, 'Your delete was successfull')
@@ -117,7 +123,7 @@ def deleteUser(request, user_id):
 @admin_only
 @login_required(login_url='login')
 def Settings(request):
-
+    """this function holds the settings page"""
     latest_merge_setting = Merge.objects.all().order_by('-date').first()
     latest_min_ph_setting = MinimumPH.objects.all().order_by('-date').first()
     latest_max_ph_setting = MaxPH.objects.all().order_by('-date').first()
@@ -142,7 +148,7 @@ def Settings(request):
 @admin_only
 @login_required(login_url='login')
 def mergeChoice(request):
-
+    """this function defines the merge choice setting"""
     latest_merge_setting = Merge.objects.all().order_by('-date').first()
 
     form = MergeForm()
@@ -152,7 +158,6 @@ def mergeChoice(request):
             form.save()
             messages.success(request, 'Your settings has been saved')
             return redirect('admin_panel')
-            
     else:
         form = MergeForm()
 
@@ -163,6 +168,7 @@ def mergeChoice(request):
 @admin_only
 @login_required(login_url='login')
 def minHelp(request):
+    """this function defines the minimum help setting"""
     latest_min_ph_setting = MinimumPH.objects.all().order_by('-date').first()
     
     form = MinimumPHForm()
@@ -172,7 +178,6 @@ def minHelp(request):
             form.save()
             messages.success(request, 'Your settings has been saved')
             return redirect('admin_panel')
-            
     else:
         form = MinimumPHForm()
 
@@ -184,6 +189,7 @@ def minHelp(request):
 @admin_only
 @login_required(login_url='login')
 def maxHelp(request):
+    """this function defines the max help setting"""
     latest_max_ph_setting = MaxPH.objects.all().order_by('-date').first()
     
     form = MaxPHForm()
@@ -193,7 +199,6 @@ def maxHelp(request):
             form.save()
             messages.success(request, 'Your settings has been saved')
             return redirect('admin_panel')
-            
     else:
         form = MaxPHForm()
 
@@ -204,6 +209,7 @@ def maxHelp(request):
 @admin_only
 @login_required(login_url='login')
 def returnsonInv(request):
+    """this function defines the returns on investment setting"""
     latest_percentage_returns_setting = PercentageReturn.objects.all().order_by('-date').first()
     
     form = PercentageReturnForm()
@@ -213,7 +219,6 @@ def returnsonInv(request):
             form.save()
             messages.success(request, 'Your settings has been saved')
             return redirect('admin_panel')
-            
     else:
         form = PercentageReturnForm()
 
@@ -225,6 +230,7 @@ def returnsonInv(request):
 @admin_only
 @login_required(login_url='login')
 def downpaymentsset(request):
+    #this function handles the percentage of downpayment per transaction
     latest_downpayments_setting = DownPaymentPercentage.objects.all().order_by('-date').first()
     
     form = DownPaymentForm()
@@ -234,7 +240,6 @@ def downpaymentsset(request):
             form.save()
             messages.success(request, 'Your settings has been saved')
             return redirect('admin_panel')
-            
     else:
         form = DownPaymentForm()
 
@@ -245,6 +250,7 @@ def downpaymentsset(request):
 @admin_only
 @login_required(login_url='login')
 def daystogethelp(request):
+    """this function defines the days to get help setting"""
     latest_days_setting = DaystoGH.objects.all().order_by('-date').first()
     
     form = DaysToGHForm()
@@ -254,7 +260,6 @@ def daystogethelp(request):
             form.save()
             messages.success(request, 'Your settings has been saved')
             return redirect('admin_panel')
-            
     else:
         form = DaysToGHForm()
 
@@ -265,6 +270,7 @@ def daystogethelp(request):
 @admin_only
 @login_required(login_url='login')
 def accountDetailsSettings(request):
+    """this function defines the admin account setting"""
     latest_account_details_setting = AdminAccountSetting.objects.all().order_by('-date').first()
     
     form = AdminAccountSettingForm()
@@ -286,6 +292,7 @@ def accountDetailsSettings(request):
 @admin_only
 @login_required(login_url='login')
 def referralbonus(request):
+    """this function defines the referral bonus limit setting"""
     latest_bonus = ReferralBonus.objects.all().order_by('-date').first()
     
     form = ReferralBonusForm()
@@ -328,7 +335,7 @@ def provideHelpRequests(request):
 @admin_only
 @login_required(login_url='login')
 def fakeHelpReports(request):
-    """this function handles the provide help request view"""
+    """this function handles the fake help reports view"""
     helps = HelpTable.objects.filter(approval_status='Fake').order_by('-merge_date')
 
     context = {'helps':helps,}
@@ -336,14 +343,16 @@ def fakeHelpReports(request):
 
 
 """
+#removed per client request
 @admin_only
 @login_required(login_url='login')
 def approveDownPayment(request, help_id):
+    #this function handles down payment approval
     helps = HelpTable.objects.get(id=help_id)
     helps.down_payment_status = "Paid"
     
     
-    #automatic merging logic
+    #automatic merging algorithm
     #username of provider
     help_provider = helps.provider
     
@@ -449,9 +458,10 @@ def approveDownPayment(request, help_id):
 @admin_only
 @login_required(login_url='login')
 def approveHelp(request, help_id):
+    """this function handles help approval"""
     helps = HelpTable.objects.get(id=help_id) 
 
-    #check that proof of payment and receiveris available before help is approved
+    #check that proof of payment and receiver is available before help is approved
     if not helps.user_proof:
         messages.error(request, 'Helper must upload proof of payment before help can be approved.')
         return redirect('admin_panel')
@@ -470,6 +480,7 @@ def approveHelp(request, help_id):
 @admin_only
 @login_required(login_url='login')
 def approveWithdrawal(request, help_id):
+    """this function approves fund withdrawals"""
     helps = ReceiverTable.objects.get(id=help_id)
 
     helps.status = 'Approved'
@@ -495,7 +506,7 @@ def approvedHelpHistory(request):
 @admin_only
 @login_required(login_url='login')
 def supportRequests(request):
-    """this function handles the approved help history view"""
+    """this function handles the support requests view"""
     supports = Contact.objects.all().order_by('-date_created')
 
     context = {'supports':supports, }
@@ -506,7 +517,7 @@ def supportRequests(request):
 @admin_only
 @login_required(login_url='login')
 def customerDetailsPage(request, user_id):
-    """this function handles the approved help history view"""
+    """this function handles the customer details page"""
     user = User.objects.get(id=user_id)
 
     context = {'user':user}
@@ -516,7 +527,7 @@ def customerDetailsPage(request, user_id):
 @admin_only
 @login_required(login_url='login')
 def mergeCustomers(request):
-    """this function handles the approved help history view"""
+    """this function handles handles the merging of customers"""
     form = MergeCustomersForm()
 
     if request.method == "POST":
@@ -549,7 +560,7 @@ def mergeCustomers(request):
 @admin_only
 @login_required(login_url='login')
 def mergeList(request):
-    """this function handles the approved help history view"""
+    """this function handles the merged help list view"""
     helps = HelpTable.objects.all().order_by('-merge_date')
 
     context = {'helps':helps,}
@@ -558,6 +569,7 @@ def mergeList(request):
 
 @login_required(login_url='login')
 def activationFeeSetting(request):
+    """this function handles the activation fee settings"""
     activation_fee_setting = ActivationFeeSetting.objects.all().order_by('-date').first()
     
     form = ActivationFeeSettingForm()
@@ -581,7 +593,5 @@ def activation_fee_receipts(request):
 
     inactive_customers = Customer.objects.filter(activate=False)
     
-    
-
     context = {'inactive_customers':inactive_customers}
     return render(request, 'admins/activation_fee_receipts.html', context)

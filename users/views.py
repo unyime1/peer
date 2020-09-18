@@ -1,3 +1,5 @@
+"""this module handles the users app views""" 
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -312,6 +314,7 @@ def userWithdrawalHistory(request):
 @activation_fee
 @login_required(login_url='login')
 def userApproveHelp(request, withdrawal_id):
+    """this function handles help approval"""
     helps = HelpTable.objects.get(id=withdrawal_id)
 
     #check if help has a proof of payment
@@ -329,6 +332,7 @@ def userApproveHelp(request, withdrawal_id):
 @activation_fee
 @login_required(login_url='login')
 def userReportHelp(request, withdrawal_id):
+    """this function handles the report of help"""
     helps = HelpTable.objects.get(id=withdrawal_id)
     helps.approval_status = "Fake"
     helps.save()
@@ -430,7 +434,7 @@ def investmentHistory(request):
 @activation_fee
 @login_required(login_url='login')
 def investmentPage(request):
-    """this view handles the Investment History Page"""
+    """this view handles the Investment Page"""
     customer = request.user.customer
     form = ProvideHelpForm()
     my_id = uuid.uuid4()
@@ -606,7 +610,7 @@ def mergeDetailsPage(request):
 
 @login_required(login_url='login')
 def withdrawalDetailsPage(request):
-    """this function handles the view that shows merge details"""
+    """this function handles the receiver details"""
     #get customer
     customer = request.user.customer
     #check the help table and get row which has this customer as provider
@@ -626,7 +630,7 @@ def withdrawalDetailsPage(request):
 
 @login_required(login_url='login')
 def userDashboard(request):
-    """this function handles the profile view""" 
+    """this function handles the user dashboard""" 
 
     customer = request.user.customer
     #account details stuff
@@ -658,7 +662,7 @@ def userDashboard(request):
 
 @login_required(login_url='login')
 def proofOfActivationPay(request):
-    
+    """this function handles proof of activation fee submission"""
     customer = request.user.customer
     form = ActivationProofForm()
     if request.method == "POST":
@@ -681,11 +685,9 @@ def proofOfActivationPay(request):
 
 def activation_fee_receipts_user(request):
     """this page handles the activation fee receipts page"""
-
     customer = request.user.customer
     inactive_customers = Customer.objects.filter(activate=False, sponsor=customer.username)
     
-
     context = {'inactive_customers':inactive_customers,}
     return render(request, 'users/activation_fee_receipts.html', context)
 

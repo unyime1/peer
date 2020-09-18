@@ -1,3 +1,5 @@
+"""this module holds the users app forms"""
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -80,7 +82,7 @@ class RegistrationForm(UserCreationForm):
 
 
 class AddressForm(forms.Form): 
-    """this class handles the user registration form"""
+    """this class handles the user registration form 2"""
     #address = forms.CharField(max_length=100, required=True, label='Address', widget=forms.TextInput(attrs={'placeholder': 'Address'}))
     #city = forms.CharField(max_length=100, required=True, label='City', widget=forms.TextInput(attrs={'placeholder': 'City'}))
     #state = forms.ChoiceField(choices=STATES)
@@ -98,6 +100,7 @@ class AddressForm(forms.Form):
             return phone_number
 
     def clean_sponsor(self):  
+        """sponsor cleaning"""
         sponsor = self.cleaned_data['sponsor']
         
         if not self.data['sponsor']:
@@ -114,12 +117,13 @@ class AddressForm(forms.Form):
 
 
 class LoginForm(forms.Form):
+    """this class defines the login form"""
     username = forms.CharField(required=True, label='Username')
     password = forms.CharField(required=True, widget=forms.PasswordInput)
     
 
 class BankingForm(ModelForm):
-    """this class handles the user registration form"""
+    """this class handles the user registration form 3"""
     bank_name = forms.CharField(max_length=100, required=True, label='Bank Name', widget=forms.TextInput(attrs={'placeholder': 'Bank Name'}))
     account_name = forms.CharField(max_length=100, required=True, label='Account Name', widget=forms.TextInput(attrs={'placeholder': 'Account Name'}))
     account_number = forms.CharField(max_length=100, required=True, label='Account Number', widget=forms.TextInput(attrs={'type':'number','placeholder': 'Account Number'}))
@@ -132,6 +136,7 @@ class BankingForm(ModelForm):
 
 
 class SupportForm(ModelForm):
+    """this class defines the support form"""
     message = forms.CharField(max_length=1000, required=True, label='', widget=forms.Textarea(attrs={'placeholder': 'Message'}))
     class Meta:
         model = Contact
@@ -139,11 +144,11 @@ class SupportForm(ModelForm):
 
 
 class ProvideHelpForm(forms.Form):
-    """this class handles the user activation form"""
+    """this class handles the PH form"""
     amount = forms.CharField(max_length=180, required=True, label='Amount', widget=forms.TextInput(attrs={'type':'number','placeholder': 'How much do you want to invest?'}))
     
     def clean_amount(self):
-        """this function handles email cleaning"""
+        """this function handles amount cleaning"""
         amount = self.cleaned_data['amount']
         latest_min_ph_setting = MinimumPH.objects.all().order_by('-date').first()
         latest_max_ph_setting = MaxPH.objects.all().order_by('-date').first()
@@ -157,7 +162,7 @@ class ProvideHelpForm(forms.Form):
 
 
 class GetHelpForm(forms.Form):
-    """this class handles the user activation form"""
+    """this class handles the GH form"""
     amount = forms.CharField(max_length=180, required=True, label='Amount', widget=forms.TextInput(attrs={'type':'number','placeholder': 'How much help do you want?'}))
 
     def clean_amount(self):
@@ -173,7 +178,7 @@ class GetHelpForm(forms.Form):
 
 
 class ProofOfPaymentForm(forms.Form):
-    """this class handles the user activation form"""
+    """this class handles the proof of payment submission form"""
     transaction_id = forms.CharField(max_length=180, required=True, label='Transaction ID', widget=forms.TextInput(attrs={'placeholder': 'Please Input Your Transaction ID'}))
     image = forms.ImageField()
 
@@ -189,6 +194,7 @@ class ProofOfPaymentForm(forms.Form):
       
 
 """
+#removed per client request
 class AdminProofOfPaymentForm(forms.Form):
    
     transaction_id = forms.CharField(max_length=180, required=True, label='Transaction ID', widget=forms.TextInput(attrs={'placeholder': 'Please Input Your Transaction ID'}))
@@ -206,4 +212,5 @@ class AdminProofOfPaymentForm(forms.Form):
 """
 
 class ActivationProofForm(forms.Form):
+    """this class defines the proof of activation fee payment form"""
     image = forms.ImageField()

@@ -1,3 +1,5 @@
+"""this module holds the admins app forms"""
+
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
@@ -12,6 +14,7 @@ STATUS = (
 )
 
 class MergeForm(ModelForm):
+    """this class holds the merge options(settings) form"""
     status = forms.ChoiceField(choices=STATUS, required=False)
 
     class Meta:
@@ -20,6 +23,7 @@ class MergeForm(ModelForm):
 
 
 class MinimumPHForm(ModelForm):
+     """this class holds the minimum PH setting form"""
     amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please Input an Amount without comma.'}))
 
     class Meta:
@@ -28,6 +32,7 @@ class MinimumPHForm(ModelForm):
 
 
 class MaxPHForm(ModelForm):
+     """this class holds the max PH setting form"""
     amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please Input an Amount without comma.'}))
 
     class Meta:
@@ -36,6 +41,7 @@ class MaxPHForm(ModelForm):
 
 
 class PercentageReturnForm(ModelForm):
+     """this class holds the percentage returns setting form"""
     amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please include a value'}))
 
     class Meta:
@@ -53,6 +59,7 @@ class DownPaymentForm(ModelForm):
 
 
 class DaysToGHForm(ModelForm):
+     """this class holds the days to get help settings form"""
     amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please include a value'}))
 
     class Meta:
@@ -61,6 +68,7 @@ class DaysToGHForm(ModelForm):
 
 
 class ReferralBonusForm(ModelForm):
+     """this class holds the reff bonus limit form"""
     amount = forms.CharField(max_length=180, required=False, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please include a value'}))
 
     class Meta:
@@ -69,6 +77,7 @@ class ReferralBonusForm(ModelForm):
 
 
 class MergeCustomersForm(forms.Form):
+     """this class holds the merge form"""
     provider = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}))
     receiver = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}))
     amount = forms.CharField(max_length=180, label='Amount', widget=forms.TextInput(attrs={'type':'number', 'placeholder': 'Please Input an Amount'}))
@@ -85,12 +94,14 @@ class MergeCustomersForm(forms.Form):
             raise forms.ValidationError(_('This transaction ID does not exist! Please check the help request and note the correct transaction ID!'))
     
     def __init__(self, *args, **kwargs):
+        """prepopulate dropdown from database"""
         super().__init__(*args, **kwargs)
         self.fields['provider'].choices= [(customer.username, customer.username) for customer in Customer.objects.all()]
         self.fields['receiver'].choices= [(customer.username, customer.username) for customer in Customer.objects.all()]
 
     
 class AdminAccountSettingForm(ModelForm):
+    """this class holds the account settings form"""
     bank_name = forms.CharField(max_length=180, required=False, label='Bank Name', widget=forms.TextInput(attrs={'placeholder': 'Please include a value'}))
     account_name = forms.CharField(max_length=180, required=False, label='Account Name', widget=forms.TextInput(attrs={'placeholder': 'Please include a value'}))
     account_number = forms.CharField(max_length=180, required=False, label='Account Number', widget=forms.TextInput(attrs={'placeholder': 'Please include a value'}))
@@ -102,6 +113,7 @@ class AdminAccountSettingForm(ModelForm):
 
 
 class ActivationFeeSettingForm(ModelForm):
+     """this class holds the activation fee settings form"""
     STATUS = (
         ('Admin', 'Admin'),
         ('Referrer', 'Referrer'), 

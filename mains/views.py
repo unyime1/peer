@@ -1,3 +1,5 @@
+"""this module holds the mains app views"""
+
 from django.shortcuts import render, redirect
 from .models import Contact
 from django.contrib import messages
@@ -5,7 +7,7 @@ from django.contrib import messages
 # Create your views here.
 
 def home(request):
-    """this function handles the main view"""
+    """this function handles the home page"""
 
     if request.method == 'POST':
         #get both the username and password
@@ -21,7 +23,6 @@ def home(request):
             message=message,
         )
         contact.save()
-
         
         messages.info(request, 'Hello ' + name.title() + ' Your message has been sent')
         return redirect('home')
